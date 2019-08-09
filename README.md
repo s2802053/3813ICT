@@ -1,5 +1,5 @@
-# 3813ICT - Coursework
-Project containing coursework for 3813ICT - Software Frameworks
+# 3813ICT
+Coursework for 3813ICT - Software Frameworks
 
 Week | Content
 ---------|----------
