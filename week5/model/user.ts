@@ -2,14 +2,12 @@ class User {
     private DOB: string; // a datestring
     private email: string;
     private password: string;
-    private valid: boolean;
 
     constructor(birthdate: string, email: string, 
-        password: string, valid: boolean){
+        password: string){
             this.DOB = birthdate;
             this.email = email;
             this.password = password;
-            this.valid = valid;
         }
 
     private age(): number {
@@ -27,10 +25,12 @@ class User {
     public user(): object{
         return {
             email: this.email,
-            password: this.password,
-            age: this.age,
-            valid: this.valid
+            DOB: this.DOB,
+            age: this.age
         }
     }
 
+    public validate(email: string, pw: string): boolean{
+        return this.email === email && this.password === pw;
+    }
 }

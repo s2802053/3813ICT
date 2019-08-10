@@ -1,12 +1,29 @@
 var router = require('express').Router();
+import { User } from '../../model/user';
 
-var dates = ['December 17, 1995 03:24:00', 'October 05, 1983 08:48:00', 'January 12, 1992 14:35:00'];
-for (date of dates){
-
-}
+let users = [];
+users[0] = new User("25 July 1993", "steve@gmail.com", "12345");
+users[1] = new User("13 February 1997", "notsteve@gmail.com", "abcde");
+users[2] = new User("28 October 1983", "maybesteve@gmail.com", "password");
 
 router.post("/login", (req, res) => {
-    res.sendStatus("api/login route hit");
+    const email = req.body.email;
+    const pw = req.body.password;
+
+    for (let user of users){
+
+        if (user.validate(email, pw)){
+
+            // retrieve object with user attributes
+            let userObj = user.user();
+            userObj.valid = true;
+            let userString = JSON.stringify(userObj);
+            sessionStorage.user = userString;
+            res.json(userString);
+        }
+    }
+    // return a user object where valid == false
+    res.json(JSON.stringify({email: email, password: pw, age: null, valid: false}));
 });
 
 module.exports = router;
