@@ -1,0 +1,31 @@
+<div class="row">
+    <div id="login" class="col-md-4">
+        <div class="labelledInput row">
+            <h2>Hello {{username}}</h2>
+        </div>
+        <div class="labelledInput row">
+            <p>Edit Profile</p>
+        </div>
+        <div class="labelledInput row">
+        <p class="label col-md-3">Username</p>
+        <input class="col-md-9" type="text" placeholder="Enter username" 
+            [(ngModel)]="user.username" name="username">
+        </div>
+        <div class="labelledInput row">
+            <p class="label col-md-3">Email</p>
+            <input class="col-md-9" type="text" placeholder="Enter email" 
+                [(ngModel)]="user.email" name="email">
+        </div>
+        <div class="labelledInput row">
+            <p class="label col-md-3">Birthdate</p>
+            <input class="col-md-9" type="text" placeholder="Enter birthdate" 
+                [(ngModel)]="user.birthdate" name="birthdate">
+        </div>
+        <div class="labelledInput row">
+            <button (click)="editProfile()">Submit Changes</button>
+        </div>
+    </div>
+</div>
+
+
+

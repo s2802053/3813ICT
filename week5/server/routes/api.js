@@ -1,29 +1,28 @@
 var router = require('express').Router();
-import { User } from '../../model/user';
+var PrivateUser = require('../model/PrivateUser');
 
 let users = [];
-users[0] = new User("25 July 1993", "steve@gmail.com", "12345");
-users[1] = new User("13 February 1997", "notsteve@gmail.com", "abcde");
-users[2] = new User("28 October 1983", "maybesteve@gmail.com", "password");
+users[0] = new PrivateUser("steve", "steve@gmail.com", "25 July 1993", "12345");
+users[1] = new PrivateUser("notsteve", "notsteve@gmail.com", "13 February 1997", "abcde");
+users[2] = new PrivateUser("maybesteve", "maybesteve@gmail.com" ,"28 October 1983", "password");
 
 router.post("/login", (req, res) => {
-    const email = req.body.email;
+    const username = req.body.username;
     const pw = req.body.password;
 
     for (let user of users){
 
-        if (user.validate(email, pw)){
+        if (user.validate(username, pw)){
 
             // retrieve object with user attributes
             let userObj = user.user();
             userObj.valid = true;
             let userString = JSON.stringify(userObj);
-            sessionStorage.user = userString;
             res.json(userString);
         }
     }
     // return a user object where valid == false
-    res.json(JSON.stringify({email: email, password: pw, age: null, valid: false}));
+    res.json(JSON.stringify({username: username, email: null, birthdate: null, age: null, valid: false}));
 });
 
 module.exports = router;

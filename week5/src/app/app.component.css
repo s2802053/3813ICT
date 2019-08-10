@@ -5,3 +5,7 @@ li {
 .nav-link {
     display: inline;
 }
+
+.navDiv{
+    background-color: #eeeeee;
+}

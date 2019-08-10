@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -7,31 +9,26 @@ import { Router } from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private router: Router){}
+  constructor(private router: Router, private httpClient: HttpClient){}
   
   private username: string;
   private password: string;
   private showError: Boolean = false;
-  private knownUsers = [
-    {username: 'steve', password: '12345'},
-    {username: 'dave', password: 'abcde'},
-    {username: 'pete', password: 'password'}
-  ];
 
   private login(){
     
     let user = {username: this.username, password: this.password};
-
-    // if the user matches a known user
-    for (let knownUser of this.knownUsers){
-      if (JSON.stringify(user) === JSON.stringify(knownUser)){
-        // navigate to account page
-        this.router.navigateByUrl('/account');
-        return;
-      }
-    }
-    // else display error message
-    this.showError = true;
-    return;
+    // send post request with user credentials to api/login
+    this.httpClient.post<string>("http://localhost:3000/api/login", user)
+      .subscribe(res => {
+        let obj = JSON.parse(res);
+        if (obj.valid){
+          sessionStorage.setItem("validUser", "true")
+          sessionStorage.setItem("user", res);
+          this.router.navigateByUrl("/account");
+        } else {
+          this.showError = true;
+        }
+      })
   }
 }
